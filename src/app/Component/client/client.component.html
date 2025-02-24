@@ -1,0 +1,164 @@
+<app-navbar></app-navbar>
+<div class=" d-flex justify-content-end m-4" (click)="displayEditDialog = true">
+    <p-button label="Add Client" />
+</div>
+
+<div class="card-body">
+    <p-table [value]="clientList"  [loading]="loading" [tableStyle]="{'min-width': '60rem'}">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:10%">Sr.No. <p-sortIcon field="code" /></th>
+                <th pSortableColumn="companyName" style="width:20%">Company Name <p-sortIcon field="companyName" /></th>
+                <th pSortableColumn="contactPersonName" style="width:15%">Person Name <p-sortIcon field="contactPersonName" /></th>
+                <th pSortableColumn="contactNo" style="width:20%">Contact No. <p-sortIcon field="contactNo" /></th>
+                <th pSortableColumn="city" style="width:15%">City <p-sortIcon field="city" /></th>
+                <th style="width:20%">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-i="rowIndex">
+            <tr>
+                <td>{{i+1}}</td>
+                <td>{{item.companyName}}</td>
+                <td>{{item.contactPersonName}}</td>
+                <td>{{item.contactNo}}</td>
+                <td>{{item.city}}</td>
+                <td>
+                    <button class="btn btn-primary me-2" (click)="onEditClient(item)">Edit</button>
+                    <button class="btn btn-danger" (click)="confirmDelete(item.clientId)">Delete</button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-confirmDialog></p-confirmDialog>
+
+
+    <!-- <p-dialog [(visible)]="displayEditDialog" header="Edit Client" [modal]="true" [closable]="false" [style]="{width: '50vw'}">
+        <form #form="ngForm" >
+            <div class="card-body ">
+                <div class="col-12 mt-3">
+                    <label for="client_name">Contact Person Name:</label>
+                    <input type="text" id="client_name" name="client_name" [(ngModel)]="clientobj.contactPersonName" class="form-control" required minlength="4">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="companyName" [(ngModel)]="clientobj.companyName" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" [(ngModel)]="clientobj.city" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="pincode">Pincode:</label>
+                    <input type="text" id="pincode" name="pincode" [(ngModel)]="clientobj.pincode" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="state">State:</label>
+                    <input type="text" id="state" name="state" [(ngModel)]="clientobj.state" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="address">Address:</label>
+                    <textarea class="form-control" id="address" name="address" [(ngModel)]="clientobj.address"></textarea>
+                </div>
+                <div class="col-12 mt-3">
+                    <label>Employee Strength:</label>
+                    <input type="text" id="employeeStrength" name="employeeStrength" [(ngModel)]="clientobj.employeeStrength" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="gstNo">GST No:</label>
+                    <input type="text" id="gstNo" name="gstNo" [(ngModel)]="clientobj.gstNo" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="contactNo">Contact No:</label>
+                    <input type="text" id="contactNo" name="contactNo" [(ngModel)]="clientobj.contactNo" class="form-control">
+                </div>
+                <div class="col-12 mt-3">
+                    <label for="regNo">Reg No:</label>
+                    <input type="text" id="regNo" name="regNo" [(ngModel)]="clientobj.regNo" class="form-control">
+                </div>
+            </div>
+            <div class="row pt-2 ">
+                <div class="d-flex justify-content-end gap-2 mt-3">
+                    <button type="button" class="btn btn-secondary" (click)="displayEditDialog = false">Cancel</button>
+                    <button class="btn btn-success" (click)="onSaveClient()" [disabled]="!form.valid">
+                        {{clientobj.clientId!=0 ? 'Update Client' : 'Save Client'}}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </p-dialog> -->
+
+
+    <p-dialog [(visible)]="displayEditDialog" header="Edit Client" [modal]="true" [closable]="false" [style]="{width: '50vw'}" >
+        <form #form="ngForm">
+            <div class="p-fluid">
+                <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="client_name">Contact Person Name:</label>
+                    <input pInputText type="text" id="client_name" name="client_name" [(ngModel)]="clientobj.contactPersonName" required minlength="4">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="company_name">Company Name:</label>
+                    <input pInputText type="text" id="company_name" name="companyName" [(ngModel)]="clientobj.companyName">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="city">City:</label>
+                    <input pInputText type="text" id="city" name="city" [(ngModel)]="clientobj.city">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="pincode">Pincode:</label>
+                    <input pInputText type="text" id="pincode" name="pincode" [(ngModel)]="clientobj.pincode">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="state">State:</label>
+                    <input pInputText type="text" id="state" name="state" [(ngModel)]="clientobj.state">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="address">Address:</label>
+                    <!-- <textarea pInputTextarea id="address" name="address" [(ngModel)]="clientobj.address"></textarea> -->
+                    <input pInputText type="text" id="address" name="address" [(ngModel)]="clientobj.address">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label>Employee Strength:</label>
+                    <input pInputText type="text" id="employeeStrength" name="employeeStrength" [(ngModel)]="clientobj.employeeStrength">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="gstNo">GST No:</label>
+                    <input pInputText type="text" id="gstNo" name="gstNo" [(ngModel)]="clientobj.gstNo">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="contactNo">Contact No:</label>
+                    <input pInputText type="text" id="contactNo" name="contactNo" [(ngModel)]="clientobj.contactNo">
+                </div>
+    
+                 <div class="p-field" [style]="{'margin-top':'2rem'}">
+                    <label for="regNo">Reg No:</label>
+                    <input pInputText type="text" id="regNo" name="regNo" [(ngModel)]="clientobj.regNo">
+                </div>
+            </div>
+    
+            <div class="p-d-flex p-jc-end p-mt-3" [style]="{'margin-top':'2rem'}">
+                <button pButton type="button" class="p-button-secondary  m-2" (click)="displayEditDialog = false">
+                    <i class="pi pi-times"></i> Cancel
+                </button>
+                <button pButton class="p-button-success m-2" (click)="onSaveClient()" [disabled]="!form.valid">
+                    <i class="pi pi-check"></i> {{ clientobj.clientId != 0 ? 'Update Client' : 'Save Client' }}
+                </button>
+            </div>
+        </form>
+    </p-dialog>
+    
+
+
+   
+    
+
+</div>
+
